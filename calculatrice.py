@@ -1,96 +1,63 @@
 from tkinter import *
 from sympy import sympify, N
 
+y = ""
+
 def bouton_clique(valeur):
     global y
     reponse.insert(END, str(valeur))
     y += str(valeur)
-y = ""
 
 def bout1():
-    reponse.insert(END, "1")
-    global y
-    y += '1'
+    bouton_clique(1)
 
 def bout2():
-    reponse.insert(END, "2")
-    global y
-    y += '2'
+    bouton_clique(2)
 
 def bout3():
-    reponse.insert(END, "3")
-    global y
-    y += '3'
+    bouton_clique(3)
 
 def bout4():
-    reponse.insert(END, "4")
-    global y
-    y += '4'
+    bouton_clique(4)
 
 def bout5():
-    reponse.insert(END, "5")
-    global y
-    y += '5'
+    bouton_clique(5)
 
 def bout6():
-    reponse.insert(END, "6")
-    global y
-    y += '6'
+    bouton_clique(6)
 
 def bout7():
-    reponse.insert(END, "7")
-    global y
-    y += '7'
+    bouton_clique(7)
 
 def bout8():
-    reponse.insert(END, "8")
-    global y
-    y += '8'
+    bouton_clique(8)
 
 def bout9():
-    reponse.insert(END, "9")
-    global y
-    y += '9'
+    bouton_clique(9)
 
 def bout0():
-    reponse.insert(END, "0")
-    global y
-    y += '0'
+    bouton_clique(0)
 
 def boutplus():
-    reponse.insert(END, "+")
-    global y
-    y += "+"
+    bouton_clique("+")
 
 def boutmoins():
-    reponse.insert(END, "-")
-    global y
-    y += "-"
+    bouton_clique("-")
 
 def boutfois():
-    reponse.insert(END, "*")
-    global y
-    y += "*"
+    bouton_clique("*")
 
 def boutdiv():
-    reponse.insert(END, "/")
-    global y
-    y += "/"
+    bouton_clique("/")
 
 def boutpoint():
-    reponse.insert(END, ".")
-    global y
-    y += "."
+    bouton_clique(".")
 
 def pargauche():
-    reponse.insert(END, "(")
-    global y
-    y += '('
+    bouton_clique("(")
 
 def pardroite():
-    reponse.insert(END, ")")
-    global y
-    y += ')'
+    bouton_clique(")")
 
 def resultat():
     global y
@@ -103,6 +70,7 @@ def resultat():
             reponse.delete("1.0", END)
             reponse.insert(END, "Erreur: " + str(e) + '\n')
         y = ""
+
 def gerer_erreur(exception):
     if isinstance(exception, (ValueError, SyntaxError)):
         return "Erreur: Expression mathématique invalide"
@@ -110,27 +78,12 @@ def gerer_erreur(exception):
         return "Erreur: Division par zéro"
     else:
         return "Erreur inattendue: " + str(exception)
-    
+
 def effacer():
     global y
     reponse.delete("1.0", END)
     y = ""
 
-fenetre.bind("<Key>", lambda e: "break")
-
-# Les boutons
-boutons = [
-    ('1', 9, 1), ('2', 9, 2), ('3', 9, 3),
-    ('4', 7, 1), ('5', 7, 2), ('6', 7, 3),
-    ('7', 5, 1), ('8', 5, 2), ('9', 5, 3),
-    ('0', 11, 1),
-    ('+', 5, 4), ('-', 7, 4),
-    ('x', 9, 4), ('/', 11, 4),
-    (',', 11, 3),
-    ('(', 13, 1), (')', 13, 2),
-    ('=', 12, 4),
-    ('supr', 14, 3)
-]
 fenetre = Tk()
 fenetre.geometry("300x500")
 fenetre.title("Calculatrice")
@@ -150,15 +103,15 @@ bouton7 = Button(fenetre, text='7', width=5, font=15, command=bout7)
 bouton8 = Button(fenetre, text='8', width=5, font=15, command=bout8)
 bouton9 = Button(fenetre, text='9', width=5, font=15, command=bout9)
 bouton0 = Button(fenetre, text='0', width=5, font=15, command=bout0)
-boutonpoint = Button(fenetre, text=',', width=5, command=boutpoint)
-boutonplus = Button(fenetre, text='+', width=4, command=boutplus)
-boutonmoins = Button(fenetre, text='-', width=4, command=boutmoins)
-boutonfois = Button(fenetre, text='x', width=4, command=boutfois)
-boutondiv = Button(fenetre, text='/', width=4, command=boutdiv)
-boutonpargauche = Button(fenetre, text='(', width=5, command=pargauche)
-boutonpardroite = Button(fenetre, text=')', width=5, command=pardroite)
-boutonegale = Button(fenetre, text='=', width=4, command=resultat)
-boutoneffacer = Button(fenetre, text="supr", width=4, command=effacer)
+boutonpoint = Button(fenetre, text=',', width=5, command=boutpoint, bg="red")
+boutonplus = Button(fenetre, text='+', width=4, command=boutplus, bg="red")
+boutonmoins = Button(fenetre, text='-', width=4, command=boutmoins, bg="red")
+boutonfois = Button(fenetre, text='x', width=4, command=boutfois, bg="red")
+boutondiv = Button(fenetre, text='/', width=4, command=boutdiv, bg="red")
+boutonpargauche = Button(fenetre, text='(', width=5, command=pargauche, bg="red")
+boutonpardroite = Button(fenetre, text=')', width=5, command=pardroite, bg="red")
+boutonegale = Button(fenetre, text='=', width=6, command=resultat, bg="red")
+boutoneffacer = Button(fenetre, text="supr", width=4, command=effacer, bg="red")
 
 # Placement des boutons avec grid
 bouton1.grid(row=9, column=1)
@@ -170,7 +123,7 @@ bouton6.grid(row=7, column=3)
 bouton7.grid(row=5, column=1)
 bouton8.grid(row=5, column=2)
 bouton9.grid(row=5, column=3)
-bouton0.grid(row=11, column=1)
+bouton0.grid(row=11, column=2)
 boutonpoint.grid(row=11, column=3)
 boutonplus.grid(row=5, column=4)
 boutonmoins.grid(row=7, column=4)
@@ -179,6 +132,6 @@ boutondiv.grid(row=11, column=4)
 boutonpargauche.grid(row=13, column=1)
 boutonpardroite.grid(row=13, column=2)
 boutonegale.grid(row=12, column=4)
-boutoneffacer.grid(row=14, column=3)
+boutoneffacer.grid(row=13, column=3)
 
 fenetre.mainloop()
