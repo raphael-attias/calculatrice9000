@@ -1,126 +1,184 @@
 from tkinter import *
+from sympy import sympify, N
+
+def bouton_clique(valeur):
+    global y
+    reponse.insert(END, str(valeur))
+    y += str(valeur)
+y = ""
 
 def bout1():
     reponse.insert(END, "1")
     global y
-    y = y + '1'
+    y += '1'
 
 def bout2():
     reponse.insert(END, "2")
     global y
-    y = y + '2'
+    y += '2'
 
 def bout3():
     reponse.insert(END, "3")
     global y
-    y = y + '3'
+    y += '3'
 
 def bout4():
     reponse.insert(END, "4")
     global y
-    y = y + '4'
+    y += '4'
 
 def bout5():
     reponse.insert(END, "5")
     global y
-    y = y + '5'
+    y += '5'
 
 def bout6():
     reponse.insert(END, "6")
     global y
-    y = y + '6'
+    y += '6'
 
 def bout7():
     reponse.insert(END, "7")
     global y
-    y = y + '7'
+    y += '7'
 
 def bout8():
     reponse.insert(END, "8")
     global y
-    y = y + '8'
+    y += '8'
 
 def bout9():
     reponse.insert(END, "9")
     global y
-    y = y + '9'
+    y += '9'
 
 def bout0():
     reponse.insert(END, "0")
     global y
-    y = y + '0'
+    y += '0'
 
 def boutplus():
     reponse.insert(END, "+")
     global y
-    y = y + "+"
+    y += "+"
 
 def boutmoins():
     reponse.insert(END, "-")
     global y
-    y = y + "-"
+    y += "-"
 
 def boutfois():
     reponse.insert(END, "*")
     global y
-    y = y + "*"
+    y += "*"
 
 def boutdiv():
     reponse.insert(END, "/")
     global y
-    y = y + "/"
+    y += "/"
 
 def boutpoint():
     reponse.insert(END, ".")
     global y
-    y = y + "."
+    y += "."
 
 def pargauche():
     reponse.insert(END, "(")
     global y
-    y = y + '('
+    y += '('
 
 def pardroite():
     reponse.insert(END, ")")
     global y
-    y = y + ')'
+    y += ')'
 
 def resultat():
-    reponse.insert(END, " = ")
     global y
-    x = round(eval(y), 8)
-    reponse.insert(END, str(x) + '\n')
-    y = str()
-
+    if y:
+        try:
+            expression = sympify(y)
+            result = round(float(N(expression)), 8)
+            reponse.insert(END, " = " + str(result) + '\n')
+        except (ValueError, SyntaxError, ZeroDivisionError) as e:
+            reponse.delete("1.0", END)
+            reponse.insert(END, "Erreur: " + str(e) + '\n')
+        y = ""
+def gerer_erreur(exception):
+    if isinstance(exception, (ValueError, SyntaxError)):
+        return "Erreur: Expression mathématique invalide"
+    elif isinstance(exception, ZeroDivisionError):
+        return "Erreur: Division par zéro"
+    else:
+        return "Erreur inattendue: " + str(exception)
+    
 def effacer():
     global y
     reponse.delete("1.0", END)
+    y = ""
 
+fenetre.bind("<Key>", lambda e: "break")
+
+# Les boutons
+boutons = [
+    ('1', 9, 1), ('2', 9, 2), ('3', 9, 3),
+    ('4', 7, 1), ('5', 7, 2), ('6', 7, 3),
+    ('7', 5, 1), ('8', 5, 2), ('9', 5, 3),
+    ('0', 11, 1),
+    ('+', 5, 4), ('-', 7, 4),
+    ('x', 9, 4), ('/', 11, 4),
+    (',', 11, 3),
+    ('(', 13, 1), (')', 13, 2),
+    ('=', 12, 4),
+    ('supr', 14, 3)
+]
 fenetre = Tk()
-fenetre.geometry("600x600")
-fenetre.title("Calculatrice programmeur")
+fenetre.geometry("300x500")
+fenetre.title("Calculatrice")
 
-reponse = Text(fenetre)  # Utilisez Text à la place de text
+reponse = Text(fenetre)
 reponse.grid(row=3, column=1, columnspan=6)
 reponse.config(height=10, width=30, font=15)
 
-bout1 = Button(fenetre, text='1', width=5, font=15, command=bout1).grid(row=9, column=1)
-bout2 = Button(fenetre, text='2', width=5, font=15, command=bout2).grid(row=9, column=2)
-bout3 = Button(fenetre, text='3', width=5, font=15, command=bout3).grid(row=9, column=3)
-bout4 = Button(fenetre, text='4', width=5, font=15, command=bout4).grid(row=7, column=1)
-bout5 = Button(fenetre, text='5', width=5, font=15, command=bout5).grid(row=7, column=2)
-bout6 = Button(fenetre, text='6', width=5, font=15, command=bout6).grid(row=7, column=3)
-bout7 = Button(fenetre, text='7', width=5, font=15, command=bout7).grid(row=5, column=1)
-bout8 = Button(fenetre, text='8', width=5, font=15, command=bout8).grid(row=5, column=2)
-bout9 = Button(fenetre, text='9', width=5, font=15, command=bout9).grid(row=5, column=3)
-bout0 = Button(fenetre, text='0', width=5, font=15, command=bout0).grid(row=11, column=1)
-boutpoint = Button(fenetre, text=',', width=5, command=boutpoint).grid(row=11, column=3)
-boutplus = Button(fenetre, text='+', width=4, command=boutplus).grid(row=5, column=4)
-boutmoins = Button(fenetre, text='-', width=4, command=boutmoins).grid(row=7, column=4)
-boutfois = Button(fenetre, text='x', width=4, command=boutfois).grid(row=9, column=4)
-boutdiv = Button(fenetre, text='/', width=4, command=boutdiv).grid(row=11, column=4)
-pargauche = Button(fenetre, text='(', width=5, command=pargauche).grid(row=13, column=1)
-pardroite = Button(fenetre, text=')', width=5, command=pardroite).grid(row=13, column=2)
-boutegale = Button(fenetre, text='=', width=4).grid(row=12, column=4)
+# Création des boutons
+bouton1 = Button(fenetre, text='1', width=5, font=15, command=bout1)
+bouton2 = Button(fenetre, text='2', width=5, font=15, command=bout2)
+bouton3 = Button(fenetre, text='3', width=5, font=15, command=bout3)
+bouton4 = Button(fenetre, text='4', width=5, font=15, command=bout4)
+bouton5 = Button(fenetre, text='5', width=5, font=15, command=bout5)
+bouton6 = Button(fenetre, text='6', width=5, font=15, command=bout6)
+bouton7 = Button(fenetre, text='7', width=5, font=15, command=bout7)
+bouton8 = Button(fenetre, text='8', width=5, font=15, command=bout8)
+bouton9 = Button(fenetre, text='9', width=5, font=15, command=bout9)
+bouton0 = Button(fenetre, text='0', width=5, font=15, command=bout0)
+boutonpoint = Button(fenetre, text=',', width=5, command=boutpoint)
+boutonplus = Button(fenetre, text='+', width=4, command=boutplus)
+boutonmoins = Button(fenetre, text='-', width=4, command=boutmoins)
+boutonfois = Button(fenetre, text='x', width=4, command=boutfois)
+boutondiv = Button(fenetre, text='/', width=4, command=boutdiv)
+boutonpargauche = Button(fenetre, text='(', width=5, command=pargauche)
+boutonpardroite = Button(fenetre, text=')', width=5, command=pardroite)
+boutonegale = Button(fenetre, text='=', width=4, command=resultat)
+boutoneffacer = Button(fenetre, text="supr", width=4, command=effacer)
+
+# Placement des boutons avec grid
+bouton1.grid(row=9, column=1)
+bouton2.grid(row=9, column=2)
+bouton3.grid(row=9, column=3)
+bouton4.grid(row=7, column=1)
+bouton5.grid(row=7, column=2)
+bouton6.grid(row=7, column=3)
+bouton7.grid(row=5, column=1)
+bouton8.grid(row=5, column=2)
+bouton9.grid(row=5, column=3)
+bouton0.grid(row=11, column=1)
+boutonpoint.grid(row=11, column=3)
+boutonplus.grid(row=5, column=4)
+boutonmoins.grid(row=7, column=4)
+boutonfois.grid(row=9, column=4)
+boutondiv.grid(row=11, column=4)
+boutonpargauche.grid(row=13, column=1)
+boutonpardroite.grid(row=13, column=2)
+boutonegale.grid(row=12, column=4)
+boutoneffacer.grid(row=14, column=3)
 
 fenetre.mainloop()
