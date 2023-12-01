@@ -35,7 +35,7 @@ def bout_plus_minus():
         bouton_clique("-")
     else:
         effacer()
-        reponse.insert(END, gerer_erreur(ValueError("Entrée invalide")))
+        reponse.insert(END, gerer_erreur(ValueError("Entrée invalide, bien tenté pour la gestion d'erreur ;)")))
         y = ""
 
 def bout_point():
