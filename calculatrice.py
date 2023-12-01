@@ -4,9 +4,6 @@ Made in Marseille
 
 @author: Raphael
 """
-#programme en-tete programme python
-#version python : 
-#auteur : ATTAS Raphaël
 #email : raphael.attias@laplateforme.io
 
 from tkinter import *
