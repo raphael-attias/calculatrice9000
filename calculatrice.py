@@ -84,7 +84,6 @@ reponse = Text(fenetre)
 reponse.grid(row=3, column=1, columnspan=6)
 reponse.config(height=10, width=30, font=15)
 
-# Création des boutons
 bouton1 = Button(fenetre, text='1', width=5, font=15, command=lambda: bouton_clique(1))
 bouton2 = Button(fenetre, text='2', width=5, font=15, command=lambda: bouton_clique(2))
 bouton3 = Button(fenetre, text='3', width=5, font=15, command=lambda: bouton_clique(3))
@@ -105,10 +104,8 @@ boutonpardroite = Button(fenetre, text=')', width=5, command=lambda: bouton_cliq
 boutonegale = Button(fenetre, text='=', width=6, command=resultat, bg="red")
 boutoneffacer = Button(fenetre, text="supr", width=4, command=effacer, bg="red")
 
-# Nouveaux boutons
 boutonplus_minus = Button(fenetre, text="+/-", width=5, command=bout_plus_minus, bg="red")
 
-# Placement des boutons avec grid
 bouton1.grid(row=9, column=1)
 bouton2.grid(row=9, column=2)
 bouton3.grid(row=9, column=3)
